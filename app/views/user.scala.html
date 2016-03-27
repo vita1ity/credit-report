@@ -1,0 +1,13 @@
+@(user: org.crama.creditreport.models.User)
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>User Page</title>
+<link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+</head>
+<body>
+	<h1>Hello @user.name</h1>
+	<a href="@org.crama.creditreport.controllers.routes.LoginController.logout">Logout</a>
+</body>
+</html>

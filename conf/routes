@@ -4,8 +4,12 @@
 
 # An example controller showing a sample home page
 GET     /                           org.crama.creditreport.controllers.HomeController.index
-GET     /signup                           org.crama.creditreport.controllers.SignUpController.signUpPage
-
+GET     /signup                     org.crama.creditreport.controllers.SignUpController.signUpPage
+POST    /signup                     org.crama.creditreport.controllers.SignUpController.signUp
+GET     /login                      org.crama.creditreport.controllers.LoginController.loginPage
+POST    /login                      org.crama.creditreport.controllers.LoginController.login
+GET     /user                       org.crama.creditreport.controllers.UserController.userPage
+GET     /logout                      org.crama.creditreport.controllers.LoginController.logout
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

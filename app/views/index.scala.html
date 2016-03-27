@@ -4,6 +4,13 @@
 @main("Authentication with Play") {
 
     <h1>@message</h1>
+    
+    @if(flash.contains("success")) {
+	    <p class="success">
+	        @flash.get("success")
+	    </p>
+	}
+    
 	<a href="/signup">SignUp</a>
 	<a href="/login">Login</a>
 }

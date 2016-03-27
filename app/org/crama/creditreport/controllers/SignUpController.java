@@ -1,39 +1,47 @@
 package org.crama.creditreport.controllers;
 
-import javax.inject.*;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
-import org.crama.creditreport.services.Counter;
+import org.crama.creditreport.form.LoginForm;
+import org.crama.creditreport.models.User;
+import org.crama.creditreport.services.UserService;
 
-import play.*;
-import play.mvc.*;
+import play.data.Form;
+import play.data.FormFactory;
+import play.mvc.Controller;
+import play.mvc.Result;
 
-/**
- * This controller demonstrates how to use dependency injection to
- * bind a component into a controller class. The class contains an
- * action that shows an incrementing count to users. The {@link Counter}
- * object is injected by the Guice dependency injection system.
- */
 @Singleton
 public class SignUpController extends Controller {
 
-    private final Counter counter;
+    private final UserService userService;
+    private final FormFactory formFactory;
 
     @Inject
-    public SignUpController(Counter counter) {
-       this.counter = counter;
+    public SignUpController(UserService userService, FormFactory formFactory) {
+       this.userService = userService;
+       this.formFactory = formFactory;	
     }
 
-    /**
-     * An action that responds with the {@link Counter}'s current
-     * count. The result is plain text. This action is mapped to
-     * <code>GET</code> requests with a path of <code>/count</code>
-     * requests by an entry in the <code>routes</code> config file.
-     */
     public Result signUpPage() {
-    	System.out.println("signup");
-        return ok(Integer.toString(counter.nextCount()));
+    	Form<User> userForm = formFactory.form(User.class);
+    	return ok(views.html.signup.render(userForm));
     }
     
-    
+    public Result signUp() {
+    	
+    	Form<User> userForm = formFactory.form(User.class).bindFromRequest();
+    	
+    	if (userForm.hasErrors()) {
+    		return badRequest(views.html.signup.render(userForm));
+    	} else {
+    		User user = userForm.get();
+    		userService.saveUser(user);
+    		flash("success", "User was registered successfully");
+    		return redirect(routes.HomeController.index());
+    	}
+       
+    }
 
 }

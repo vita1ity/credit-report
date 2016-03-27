@@ -1,0 +1,37 @@
+@(userForm: Form[org.crama.creditreport.models.User])
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Signup Page</title>
+<link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+</head>
+<body>
+
+	@helper.form(org.crama.creditreport.controllers.routes.SignUpController.signUp) {
+	   <h1>Sign up</h1>
+		
+		@if(userForm.hasGlobalErrors) {
+			<ul>
+				@for(error <- userForm.globalErrors) {
+					<li>@error.message</li>
+				}
+			</ul>
+		}
+		
+	   <p>
+	   	   @helper.inputText(userForm("email"))
+	   </p>
+	   <p>
+	   	   @helper.inputText(userForm("name"))
+	   </p>
+	   <p>
+	   	   @helper.inputPassword(userForm("password"))
+	   </p>
+	   <p>
+	       <button type="submit">Register</button>
+	   </p>
+	}
+</body>
+</html>
